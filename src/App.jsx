@@ -2,31 +2,29 @@ import { useState } from 'react';
 import Home from './components/Home';
 import Game from './components/Game';
 
-import './App.css'
-
 const App = () => {
+  const [gameMode, setGameMode] = useState('');
   const [range, setRange] = useState(null);
   const [gameStart, setGameStart] = useState(false);
-  const [gameKey, setGameKey] = useState(0);
 
-  const handleRangeSelect = (selectedRange) => {
+  const handleGameStart = (selectedGameMode, selectedRange) => {
+    setGameMode(selectedGameMode);
     setRange(selectedRange);
     setGameStart(true);
   };
 
   const resetGame = () => {
     setGameStart(false);
+    setGameMode('');
     setRange(null);
-    setGameKey(prevKey => prevKey + 1);
   };
 
   return (
-    <div>
+    <div className='App'>
       {!gameStart ? (
-        <Home onRangeSelect={handleRangeSelect} />
+        <Home onGameStart={handleGameStart} />
       ) : (
-      
-        <Game key={gameKey} range={range} onGameEnd={resetGame} />
+        <Game gameMode={gameMode} range={range} onGameEnd={resetGame} />
       )}
     </div>
   );
