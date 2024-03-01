@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const ranges = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+const optionCounts = [1, 2, 3, 4, 5];
 
 const Home = ({ onGameStart }) => {
   const [selectedGameMode, setSelectedGameMode] = useState('');
-  const [selectedRange, setSelectedRange] = useState(''); // Default to empty or a sensible default
+  const [selectedRange, setSelectedRange] = useState('');
+  const [selectedOptionCount, setSelectedOptionCount] = useState(2); // Default to 2 options
 
   const startGame = () => {
-    if (selectedGameMode && selectedRange) {
-      onGameStart(selectedGameMode, parseInt(selectedRange, 10)); // Ensure selectedRange is passed as a number
+    if (selectedGameMode && selectedRange && selectedOptionCount) {
+      onGameStart(selectedGameMode, parseInt(selectedRange, 10), selectedOptionCount);
     } else {
-      alert('Please select both a game mode and a number range to start.');
+      alert('Please select a game mode, a number range, and the number of options to start.');
     }
   };
 
@@ -43,6 +45,21 @@ const Home = ({ onGameStart }) => {
           {ranges.map(range => (
             <option key={range} value={range}>
               Up to {range}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <h2 className='home__title'>Select Number of Options:</h2>
+      <div className='home__option-count'>
+        <select 
+          className='home__option-count-select' 
+          value={selectedOptionCount} 
+          onChange={(e) => setSelectedOptionCount(parseInt(e.target.value, 10))}
+        >
+          {optionCounts.map(count => (
+            <option key={count} value={count}>
+              {count}
             </option>
           ))}
         </select>

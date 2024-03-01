@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { toWords } from 'number-to-words';
 import PropTypes from 'prop-types';
 
-const Game = ({ gameMode, range, onGameEnd }) => {
+const Game = ({ gameMode, range, optionCount, onGameEnd }) => {
   const [currentNumber, setCurrentNumber] = useState(0);
   const [currentNumberText, setCurrentNumberText] = useState('');
   const [score, setScore] = useState(0);
@@ -11,26 +11,33 @@ const Game = ({ gameMode, range, onGameEnd }) => {
   const [gameEnded, setGameEnded] = useState(false);
   const [userResponses, setUserResponses] = useState([]);
 
-  const generateQuestion = () => {
-    const number = Math.floor(Math.random() * range) + 1;
-    let incorrectNumber;
-    do {
-      incorrectNumber = Math.floor(Math.random() * range) + 1;
-    } while (incorrectNumber === number);
+  console.log(optionCount);
 
-    setCurrentNumber(number);
-    setCurrentNumberText(toWords(number));
+  const generateOptions = (correctNumber) => {
+    let optionsSet = new Set();
+    optionsSet.add(correctNumber); // Add correct answer to ensure it's included
 
-    let correctOption, incorrectOption;
-    if (gameMode === 'numbersToText') {
-      correctOption = toWords(number);
-      incorrectOption = toWords(incorrectNumber);
-    } else {
-      correctOption = number.toString();
-      incorrectOption = incorrectNumber.toString();
+    // Generate additional unique options
+    while (optionsSet.size < optionCount) {
+      let potentialOption = Math.floor(Math.random() * range) + 1;
+      optionsSet.add(potentialOption);
     }
 
-    const options = [correctOption, incorrectOption].sort(() => Math.random() - 0.5);
+    let optionsArray = Array.from(optionsSet);
+    if (gameMode === 'numbersToText') {
+      return optionsArray.map(number => toWords(number));
+    } else {
+      return optionsArray.map(number => number.toString());
+    }
+  };
+
+  const generateQuestion = () => {
+    const correctNumber = Math.floor(Math.random() * range) + 1;
+    setCurrentNumber(correctNumber);
+    setCurrentNumberText(toWords(correctNumber));
+
+    let options = generateOptions(correctNumber);
+    options.sort(() => Math.random() - 0.5); // Shuffle options
     setOptions(options);
   };
 
@@ -118,6 +125,7 @@ const Game = ({ gameMode, range, onGameEnd }) => {
 Game.propTypes = {
   gameMode: PropTypes.string.isRequired,
   range: PropTypes.number.isRequired,
+  optionCount: PropTypes.number,
   onGameEnd: PropTypes.func.isRequired,
 };
 
