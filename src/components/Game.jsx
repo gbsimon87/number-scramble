@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toWords } from 'number-to-words';
 import PropTypes from 'prop-types';
 
 const Game = ({ gameMode, range, onGameEnd }) => {
@@ -10,11 +11,6 @@ const Game = ({ gameMode, range, onGameEnd }) => {
   const [gameEnded, setGameEnded] = useState(false);
   const [userResponses, setUserResponses] = useState([]);
 
-  const numberToWord = (number) => {
-    const words = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-    return words[number - 1] || number.toString();
-  };
-
   const generateQuestion = () => {
     const number = Math.floor(Math.random() * range) + 1;
     let incorrectNumber;
@@ -23,13 +19,13 @@ const Game = ({ gameMode, range, onGameEnd }) => {
     } while (incorrectNumber === number);
 
     setCurrentNumber(number);
-    setCurrentNumberText(numberToWord(number));
+    setCurrentNumberText(toWords(number));
 
     let correctOption, incorrectOption;
     if (gameMode === 'numbersToText') {
-      correctOption = numberToWord(number);
-      incorrectOption = numberToWord(incorrectNumber);
-    } else { // textToNumbers
+      correctOption = toWords(number);
+      incorrectOption = toWords(incorrectNumber);
+    } else {
       correctOption = number.toString();
       incorrectOption = incorrectNumber.toString();
     }
@@ -43,16 +39,24 @@ const Game = ({ gameMode, range, onGameEnd }) => {
   }, [currentQuestion, gameMode, range]);
 
   const handleAnswer = (selectedOption) => {
-    const questionText = gameMode === 'numbersToText' ? `What is the number ${currentNumber} in text?` : `What does "${currentNumberText}" represent in numbers?`;
-    const isCorrect = gameMode === 'numbersToText' ? 
-      selectedOption === numberToWord(currentNumber) : 
-      parseInt(selectedOption, 10) === currentNumber;
+    let isCorrect = false;
+    if (gameMode === 'numbersToText') {
+     
+      isCorrect = selectedOption === toWords(currentNumber);
+    } else {
+     
+      isCorrect = parseInt(selectedOption, 10) === currentNumber;
+    }
   
+    const correctAnswer = gameMode === 'numbersToText' ? toWords(currentNumber) : currentNumber.toString();
+    const questionText = gameMode === 'numbersToText' ? `What is the number ${currentNumber} in text?` : `What does "${currentNumberText}" represent in numbers?`;
+  
+   
     const newUserResponses = [...userResponses, {
       questionNumber: currentQuestion,
       question: questionText,
       userAnswer: selectedOption,
-      correctAnswer: gameMode === 'numbersToText' ? numberToWord(currentNumber) : currentNumber.toString(),
+      correctAnswer: correctAnswer,
     }];
   
     setUserResponses(newUserResponses);
@@ -61,6 +65,7 @@ const Game = ({ gameMode, range, onGameEnd }) => {
       setScore(score + 1);
     }
   
+   
     if (currentQuestion < 5) {
       setCurrentQuestion(currentQuestion + 1);
     } else {

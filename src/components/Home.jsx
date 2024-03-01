@@ -5,11 +5,11 @@ const ranges = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 const Home = ({ onGameStart }) => {
   const [gameMode, setGameMode] = useState('');
-  const [step, setStep] = useState(1); // 1 for game mode selection, 2 for range selection
+  const [step, setStep] = useState(1);
 
   const handleGameModeSelect = (mode) => {
     setGameMode(mode);
-    setStep(2); // Move to range selection
+    setStep(2);
   };
 
   const handleRangeSelect = (range) => {
