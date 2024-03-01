@@ -21,66 +21,75 @@ const Home = ({ onGameStart }) => {
 
   return (
     <div className='home'>
-      <h2 className='home__title'>Select Game Mode:</h2>
-      <div className='home__mode-options'>
-        <button
-          className={`home__mode-option ${selectedGameMode === 'numbersToText' ? 'home__mode-option--selected' : ''}`}
-          onClick={() => setSelectedGameMode('numbersToText')}>
-          Numbers to Text
-        </button>
-        <button
-          className={`home__mode-option ${selectedGameMode === 'textToNumbers' ? 'home__mode-option--selected' : ''}`}
-          onClick={() => setSelectedGameMode('textToNumbers')}>
-          Text to Numbers
-        </button>
+
+      <div className='home__mode'>
+        <h2 className='home__title'>Select Game Mode:</h2>
+        <div className='home__mode-options'>
+          <button
+            className={`home__mode-option ${selectedGameMode === 'numbersToText' ? 'home__mode-option--selected' : ''}`}
+            onClick={() => setSelectedGameMode('numbersToText')}>
+            Numbers to Text
+          </button>
+          <button
+            className={`home__mode-option ${selectedGameMode === 'textToNumbers' ? 'home__mode-option--selected' : ''}`}
+            onClick={() => setSelectedGameMode('textToNumbers')}>
+            Text to Numbers
+          </button>
+        </div>
       </div>
 
-      <h2 className='home__title'>Select Range of Numbers:</h2>
-      <div className='home__range-options'>
-        {/* Dropdown for range selection */}
-        <select 
-          className='home__range-select' 
-          value={selectedRange} 
-          onChange={(e) => setSelectedRange(e.target.value)}
-        >
-          <option value="">Select a range</option> {/* Default option */}
-          {ranges.map(range => (
-            <option key={range} value={range}>
-              Up to {range}
-            </option>
-          ))}
-        </select>
+      <div className="home__range">
+        <h2 className='home__title'>Select Range of Numbers:</h2>
+        <div className='home__range-options'>
+          {/* Dropdown for range selection */}
+          <select
+            className='home__range-select'
+            value={selectedRange}
+            onChange={(e) => setSelectedRange(e.target.value)}
+          >
+            <option value="">Select a range</option> {/* Default option */}
+            {ranges.map(range => (
+              <option key={range} value={range}>
+                Up to {range}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <h2 className='home__title'>Select Number of Options:</h2>
-      <div className='home__option-count'>
-        <select 
-          className='home__option-count-select' 
-          value={selectedOptionCount} 
-          onChange={(e) => setSelectedOptionCount(parseInt(e.target.value, 10))}
-        >
-          {optionCounts.map(count => (
-            <option key={count} value={count}>
-              {count}
-            </option>
-          ))}
-        </select>
+      <div className="home__options">
+        <h2 className='home__title'>Select Number of Options:</h2>
+        <div className='home__option-count'>
+          <select
+            className='home__option-count-select'
+            value={selectedOptionCount}
+            onChange={(e) => setSelectedOptionCount(parseInt(e.target.value, 10))}
+          >
+            {optionCounts.map(count => (
+              <option key={count} value={count}>
+                {count}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <h2 className='home__title'>Select Number of Questions:</h2>
-      <div className='home__question-count'>
-        <select 
-          className='home__question-count-select' 
-          value={selectedQuestionCount} 
-          onChange={(e) => setSelectedQuestionCount(parseInt(e.target.value, 10))}
-        >
-          {/* Providing options for question count */}
-          {[5, 10, 15, 20].map(count => (
-            <option key={count} value={count}>
-              {count}
-            </option>
-          ))}
-        </select>
+      <div className="home__question">
+        <h2 className='home__title'>Select Number of Questions:</h2>
+        <div className='home__question-count'>
+          <select
+            className='home__question-count-select'
+            value={selectedQuestionCount}
+            onChange={(e) => setSelectedQuestionCount(parseInt(e.target.value, 10))}
+          >
+            {/* Providing options for question count */}
+            {[5, 10, 15, 20].map(count => (
+              <option key={count} value={count}>
+                {count}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <button className='home__start-button' onClick={startGame}>Start Game</button>

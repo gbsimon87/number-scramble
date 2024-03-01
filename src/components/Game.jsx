@@ -104,6 +104,16 @@ const Game = ({ gameMode, range, optionCount, questionCount, onGameEnd }) => {
 
   return (
     <div className='game'>
+      {/* Progress Bar */}
+      <div className="game__progress-bar-container">
+        <div 
+          className="game__progress-bar-filler" 
+          style={{ width: `${(currentQuestion / questionCount) * 100}%` }}
+        ></div>
+      </div>
+      <div className='game__question-count'>
+        Question {currentQuestion} / {questionCount}
+      </div>
       <h2 className='game__question'>
         {gameMode === 'numbersToText'
           ? `How do you write the number ${currentNumber}?`
