@@ -49,7 +49,7 @@ const Game = ({ gameMode, range, onGameEnd }) => {
     }
   
     const correctAnswer = gameMode === 'numbersToText' ? toWords(currentNumber) : currentNumber.toString();
-    const questionText = gameMode === 'numbersToText' ? `What is the number ${currentNumber} in text?` : `What does "${currentNumberText}" represent in numbers?`;
+    const questionText = gameMode === 'numbersToText' ? `How do you write the number ${currentNumber}?` : `What does "${currentNumberText}" represent in numbers?`;
   
    
     const newUserResponses = [...userResponses, {
@@ -86,7 +86,7 @@ const Game = ({ gameMode, range, onGameEnd }) => {
             <ul className='game__feedback-list'>
               {incorrectResponses.map((response, index) => (
                 <li className='game__feedback-item' key={index}>
-                  Question {response.questionNumber}: {response.question} You answered "{response.userAnswer}", but the correct answer was "{response.correctAnswer}".
+                  Question {response.questionNumber}: {response.question} You answered &quot;{response.userAnswer}&quot;, but the correct answer was &quot;{response.correctAnswer}&quot;.
                 </li>
               ))}
             </ul>
@@ -101,7 +101,7 @@ const Game = ({ gameMode, range, onGameEnd }) => {
     <div className='game'>
       <h2 className='game__question'>
         {gameMode === 'numbersToText'
-          ? `What is the number ${currentNumber} in text?`
+          ? `How do you write the number ${currentNumber}?`
           : `What does "${currentNumberText}" represent in numbers?`}
       </h2>
       <div className='game__options'>

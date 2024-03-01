@@ -5,11 +5,11 @@ const ranges = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 const Home = ({ onGameStart }) => {
   const [selectedGameMode, setSelectedGameMode] = useState('');
-  const [selectedRange, setSelectedRange] = useState(null);
+  const [selectedRange, setSelectedRange] = useState(''); // Default to empty or a sensible default
 
   const startGame = () => {
     if (selectedGameMode && selectedRange) {
-      onGameStart(selectedGameMode, selectedRange);
+      onGameStart(selectedGameMode, parseInt(selectedRange, 10)); // Ensure selectedRange is passed as a number
     } else {
       alert('Please select both a game mode and a number range to start.');
     }
@@ -33,14 +33,19 @@ const Home = ({ onGameStart }) => {
 
       <h2 className='home__title'>Select Range of Numbers:</h2>
       <div className='home__range-options'>
-        {ranges.map(range => (
-          <button
-            className={`home__range-option ${selectedRange === range ? 'home__range-option--selected' : ''}`}
-            key={range}
-            onClick={() => setSelectedRange(range)}>
-            Up to {range}
-          </button>
-        ))}
+        {/* Dropdown for range selection */}
+        <select 
+          className='home__range-select' 
+          value={selectedRange} 
+          onChange={(e) => setSelectedRange(e.target.value)}
+        >
+          <option value="">Select a range</option> {/* Default option */}
+          {ranges.map(range => (
+            <option key={range} value={range}>
+              Up to {range}
+            </option>
+          ))}
+        </select>
       </div>
 
       <button className='home__start-button' onClick={startGame}>Start Game</button>
