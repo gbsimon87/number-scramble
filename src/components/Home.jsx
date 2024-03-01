@@ -1,40 +1,49 @@
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 const ranges = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 const Home = ({ onGameStart }) => {
-  const [gameMode, setGameMode] = useState('');
-  const [step, setStep] = useState(1);
+  const [selectedGameMode, setSelectedGameMode] = useState('');
+  const [selectedRange, setSelectedRange] = useState(null);
 
-  const handleGameModeSelect = (mode) => {
-    setGameMode(mode);
-    setStep(2);
-  };
-
-  const handleRangeSelect = (range) => {
-    onGameStart(gameMode, range);
+  const startGame = () => {
+    if (selectedGameMode && selectedRange) {
+      onGameStart(selectedGameMode, selectedRange);
+    } else {
+      alert('Please select both a game mode and a number range to start.');
+    }
   };
 
   return (
     <div className='home'>
-      {step === 1 && (
-        <>
-          <h2 className='home__title'>Select a game mode:</h2>
-          <button className='home__button' onClick={() => handleGameModeSelect('numbersToText')}>Numbers to Text</button>
-          <button className='home__button' onClick={() => handleGameModeSelect('textToNumbers')}>Text to Numbers</button>
-        </>
-      )}
-      {step === 2 && (
-        <>
-          <h2>Select the range of numbers:</h2>
-          {ranges.map(range => (
-            <button key={range} className='home__button' onClick={() => handleRangeSelect(range)}>
-              Up to {range}
-            </button>
-          ))}
-        </>
-      )}
+      <h2 className='home__title'>Select Game Mode:</h2>
+      <div className='home__mode-options'>
+        <button
+          className={`home__mode-option ${selectedGameMode === 'numbersToText' ? 'home__mode-option--selected' : ''}`}
+          onClick={() => setSelectedGameMode('numbersToText')}>
+          Numbers to Text
+        </button>
+        <button
+          className={`home__mode-option ${selectedGameMode === 'textToNumbers' ? 'home__mode-option--selected' : ''}`}
+          onClick={() => setSelectedGameMode('textToNumbers')}>
+          Text to Numbers
+        </button>
+      </div>
+
+      <h2 className='home__title'>Select Range of Numbers:</h2>
+      <div className='home__range-options'>
+        {ranges.map(range => (
+          <button
+            className={`home__range-option ${selectedRange === range ? 'home__range-option--selected' : ''}`}
+            key={range}
+            onClick={() => setSelectedRange(range)}>
+            Up to {range}
+          </button>
+        ))}
+      </div>
+
+      <button className='home__start-button' onClick={startGame}>Start Game</button>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Home from './components/Home';
 import Game from './components/Game';
+import './App.css';
 
 const App = () => {
   const [gameMode, setGameMode] = useState('');
