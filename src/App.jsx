@@ -6,21 +6,25 @@ import './App.css';
 const App = () => {
   const [gameMode, setGameMode] = useState('');
   const [range, setRange] = useState(null);
-  const [optionCount, setOptionCount] = useState(2); // Default to 2 options
+  const [optionCount, setOptionCount] = useState(2);
   const [gameStart, setGameStart] = useState(false);
+  const [questionCount, setQuestionCount] = useState(5);
 
-  const handleGameStart = (selectedGameMode, selectedRange, selectedOptionCount) => {
+  const handleGameStart = (selectedGameMode, selectedRange, selectedOptionCount, selectedQuestionCount) => {
     setGameMode(selectedGameMode);
     setRange(selectedRange);
-    setOptionCount(selectedOptionCount); // Save the selected option count
+    setOptionCount(selectedOptionCount);
+    setQuestionCount(selectedQuestionCount);
     setGameStart(true);
   };
+  
 
   const resetGame = () => {
     setGameStart(false);
     setGameMode('');
     setRange(null);
-    setOptionCount(2); // Reset to default
+    setOptionCount(2);
+    setQuestionCount(0);
   };
 
   return (
@@ -28,7 +32,13 @@ const App = () => {
       {!gameStart ? (
         <Home onGameStart={handleGameStart} />
       ) : (
-        <Game gameMode={gameMode} range={range} optionCount={optionCount} onGameEnd={resetGame} />
+        <Game
+          gameMode={gameMode}
+          range={range}
+          optionCount={optionCount}
+          questionCount={questionCount} // Make sure this prop is passed
+          onGameEnd={resetGame}
+        />
       )}
     </div>
   );

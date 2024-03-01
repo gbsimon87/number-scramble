@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { toWords } from 'number-to-words';
 import PropTypes from 'prop-types';
 
-const Game = ({ gameMode, range, optionCount, onGameEnd }) => {
+const Game = ({ gameMode, range, optionCount, questionCount, onGameEnd }) => {
   const [currentNumber, setCurrentNumber] = useState(0);
   const [currentNumberText, setCurrentNumberText] = useState('');
   const [score, setScore] = useState(0);
@@ -57,7 +57,6 @@ const Game = ({ gameMode, range, optionCount, onGameEnd }) => {
   
     const correctAnswer = gameMode === 'numbersToText' ? toWords(currentNumber) : currentNumber.toString();
     const questionText = gameMode === 'numbersToText' ? `How do you write the number ${currentNumber}?` : `What does "${currentNumberText}" represent in numbers?`;
-  
    
     const newUserResponses = [...userResponses, {
       questionNumber: currentQuestion,
@@ -71,9 +70,8 @@ const Game = ({ gameMode, range, optionCount, onGameEnd }) => {
     if (isCorrect) {
       setScore(score + 1);
     }
-  
    
-    if (currentQuestion < 5) {
+    if (currentQuestion < questionCount) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setGameEnded(true);
@@ -81,12 +79,12 @@ const Game = ({ gameMode, range, optionCount, onGameEnd }) => {
   };
 
   if (gameEnded) {
-    const percentageScore = (score / 5) * 100;
+    const percentageScore = (score / questionCount) * 100;
     const incorrectResponses = userResponses.filter(response => response.userAnswer !== response.correctAnswer);
   
     return (
       <div className='game'>
-        <h2 className='game__score'>Your score is {score} out of 5, which is {percentageScore}%</h2>
+        <h2 className='game__score'>Your score is {score} out of {questionCount}, which is {percentageScore}%</h2>
         {incorrectResponses.length > 0 && (
           <div className='game__feedback'>
             <h3 className='game__feedback-title'>Incorrect Answers:</h3>
