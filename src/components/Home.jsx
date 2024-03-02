@@ -57,23 +57,6 @@ const Home = ({ onGameStart }) => {
         </div>
       </div>
 
-      <div className="home__options">
-        <h2 className='home__title'>Select Number of Options:</h2>
-        <div className='home__option-count'>
-          <select
-            className='home__option-count-select'
-            value={selectedOptionCount}
-            onChange={(e) => setSelectedOptionCount(parseInt(e.target.value, 10))}
-          >
-            {optionCounts.map(count => (
-              <option key={count} value={count}>
-                {count}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
       <div className="home__question">
         <h2 className='home__title'>Select Number of Questions:</h2>
         <div className='home__question-count'>
@@ -84,6 +67,23 @@ const Home = ({ onGameStart }) => {
           >
             {/* Providing options for question count */}
             {[5, 10, 15, 20].map(count => (
+              <option key={count} value={count}>
+                {count}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="home__options">
+        <h2 className='home__title'>Select Number of Options:</h2>
+        <div className='home__option-count'>
+          <select
+            className='home__option-count-select'
+            value={selectedOptionCount}
+            onChange={(e) => setSelectedOptionCount(parseInt(e.target.value, 10))}
+          >
+            {optionCounts.map(count => (
               <option key={count} value={count}>
                 {count}
               </option>

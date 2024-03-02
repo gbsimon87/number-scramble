@@ -1,10 +1,13 @@
 /* App */
 .App {
-  padding: 0 1rem;
   display: flex;
-  min-height: 100dvh;
   place-items: center;
   justify-content: center;
+  padding: 1rem;
+  min-height: 100dvh;
+  font-size: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* HOME */
@@ -14,36 +17,70 @@
   gap: 3rem;
 }
 
+.home h2 {
+  font-family: "Madimi One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.home__mode-options {
+  display: flex;
+  gap: 1rem;
+}
+
 .home__mode-option--selected,
 .home__range-option--selected {
   background-color: #4CAF50;
   color: white;
 }
 
+.home__start-button {
+  background-color: #7CFC00;
+  color: #6A0DAD;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
 /* GAME */
-.game__options {
+.game {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  flex-flow: column;
+  gap: 2rem;
+  width: 100%;
 }
 
 .game__progress-bar-container {
   width: 100%;
   background-color: #eee;
-  border-radius: 8px;
-  margin: 20px 0;
+  border-radius: 0.5rem;
 }
 
 .game__progress-bar-filler {
   height: 20px;
   background-color: #4caf50;
-  /* Adjust the color to fit your design */
-  border-radius: 8px 0 0 8px;
-  /* Smooths the left side of the bar */
+  border-radius: 0.5rem;
   transition: width 0.5s ease-in-out;
-  /* Smooth transition for the bar growth */
+}
+
+.game__question {
+  text-align: center;
+  font-size: 4rem;
+}
+
+.game__options {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .game__option-button {
-  min-width: 10rem;
+  background: white;
+  color: #6A0DAD;
+  flex-basis: 100%;
+  min-height: 5rem;
+  font-size: 2rem;
 }

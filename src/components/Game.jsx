@@ -11,8 +11,6 @@ const Game = ({ gameMode, range, optionCount, questionCount, onGameEnd }) => {
   const [gameEnded, setGameEnded] = useState(false);
   const [userResponses, setUserResponses] = useState([]);
 
-  console.log(optionCount);
-
   const generateOptions = (correctNumber) => {
     let optionsSet = new Set();
     optionsSet.add(correctNumber); // Add correct answer to ensure it's included
@@ -56,7 +54,7 @@ const Game = ({ gameMode, range, optionCount, questionCount, onGameEnd }) => {
     }
   
     const correctAnswer = gameMode === 'numbersToText' ? toWords(currentNumber) : currentNumber.toString();
-    const questionText = gameMode === 'numbersToText' ? `How do you write the number ${currentNumber}?` : `What does "${currentNumberText}" represent in numbers?`;
+    const questionText = gameMode === 'numbersToText' ? `How do you write the number ${currentNumber}?` : `${currentNumberText}`;
    
     const newUserResponses = [...userResponses, {
       questionNumber: currentQuestion,
@@ -117,7 +115,7 @@ const Game = ({ gameMode, range, optionCount, questionCount, onGameEnd }) => {
       <h2 className='game__question'>
         {gameMode === 'numbersToText'
           ? `How do you write the number ${currentNumber}?`
-          : `What does "${currentNumberText}" represent in numbers?`}
+          : `${currentNumberText}`}
       </h2>
       <div className='game__options'>
         {options.map((option, index) => (
